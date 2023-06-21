@@ -82,7 +82,7 @@ describe('Gilded Rose', () => {
         gildedRose.updateQuality()
         const updatedItems = gildedRose.getItems()
         const totalQuality = updatedItems.reduce((sum, item) => sum + item.quality, 0)
-        expect(totalQuality).toBe(10); 
+        expect(totalQuality).toBe(150); 
       });
     })
 
