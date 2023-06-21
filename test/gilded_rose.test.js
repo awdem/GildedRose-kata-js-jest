@@ -59,8 +59,8 @@ describe('Gilded Rose', () => {
         }
       );
 
-      test.each([5, 4, 3, 2, 1])(
-        'when SellIn is 1..5, it raises the quality of Backstage passes by 3',
+      test.each([5, 4, 3, 2, 1, 0])(
+        'when SellIn is 0..5, it raises the quality of Backstage passes by 3',
         (sellIn) => {
           const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 0)]
           const gildedRose = new Shop(items);
@@ -88,7 +88,7 @@ describe('Gilded Rose', () => {
 
     describe('given an out-of-date item', () => {
       test('it lowers the quality of a normal item by 2, rather than 1', () => {
-        const items = [new Item("item", 0, 20)]
+        const items = [new Item("item", -1, 20)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -97,7 +97,7 @@ describe('Gilded Rose', () => {
       })
 
       test('it does not change the quality of Sulfuras', () => {
-        const items = [new Item("Sulfuras, Hand of Ragnaros", 0, 80)]
+        const items = [new Item("Sulfuras, Hand of Ragnaros", -1, 80)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -105,7 +105,7 @@ describe('Gilded Rose', () => {
         expect(item.quality).toBe(80);    
       });
       test('it raises the quality of Aged Brie by 1', () => {
-        const items = [new Item("Aged Brie", 0, 20)]
+        const items = [new Item("Aged Brie", -1, 20)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -114,7 +114,7 @@ describe('Gilded Rose', () => {
       });
 
       test('Aged Brie quality cannot go above 50', () => {
-        const items = [new Item("Aged Brie", 0, 50)]
+        const items = [new Item("Aged Brie", -1, 50)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -123,7 +123,7 @@ describe('Gilded Rose', () => {
       });
 
       test('it sets the quality of Backstage passes to 0', () => {
-        const items = [new Item("Backstage passes to a TAFKAL80ETC concert", 0, 20)]
+        const items = [new Item("Backstage passes to a TAFKAL80ETC concert", -1, 20)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -133,8 +133,8 @@ describe('Gilded Rose', () => {
 
       test('of the items that lose quality, no item quality can go below 0', () => {
         const items = [
-          new Item("regular item", 0, 0),
-          new Item("Backstage passes to a TAFKAL80ETC concert", 0, 0),
+          new Item("regular item", -1, 0),
+          new Item("Backstage passes to a TAFKAL80ETC concert", -1, 0),
         ]
         const gildedRose = new Shop(items);
 
