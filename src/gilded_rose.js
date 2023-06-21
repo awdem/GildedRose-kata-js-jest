@@ -27,16 +27,18 @@ class Shop {
         return;
       }
 
-      switch (item.name) {
-        case "Aged Brie":
+      const name = item.name
+
+      switch (true) {
+        case /aged brie/i.test(name):
           this.updateAgedBrieQuality(item);
           break;
-        case "Sulfuras, Hand of Ragnaros":
+        case /sulfuras/i.test(name):
           break;
-        case "Backstage passes to a TAFKAL80ETC concert":
+        case /backstage passes/i.test(name):
           this.updateBackstagePassesQuality(item);
           break;
-        case 'Conjured Mana Cake':
+        case /conjured/i.test(name):
           this.updateConjuredItemQuality(item);
           break;
         default:
