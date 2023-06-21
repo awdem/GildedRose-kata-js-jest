@@ -19,6 +19,15 @@ describe('Gilded Rose', () => {
         const item = gildedRose.getItems()[0]
         expect(item.quality).toBe(19);    
       });
+
+      test('it lowers the quality of a conjured item by 2', () => {
+        const items = [new Item("Conjured Mana Cake", 10, 20)]
+        const gildedRose = new Shop(items);
+
+        gildedRose.updateQuality()
+        const item = gildedRose.getItems()[0]
+        expect(item.quality).toBe(18);    
+      });
       
       test('it does not change the quality of Sulfuras', () => {
         const items = [new Item("Sulfuras, Hand of Ragnaros", 10, 80)]
@@ -95,6 +104,15 @@ describe('Gilded Rose', () => {
         const item = gildedRose.getItems()[0]
         expect(item.quality).toBe(18);      
       })
+
+      test('it lowers the quality of a conjured item by 4', () => {
+        const items = [new Item("Conjured Mana Cake", -1, 20)]
+        const gildedRose = new Shop(items);
+
+        gildedRose.updateQuality()
+        const item = gildedRose.getItems()[0]
+        expect(item.quality).toBe(16);    
+      });
 
       test('it does not change the quality of Sulfuras', () => {
         const items = [new Item("Sulfuras, Hand of Ragnaros", -1, 80)]
