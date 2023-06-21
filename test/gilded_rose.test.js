@@ -10,7 +10,7 @@ describe('Gilded Rose', () => {
   });
 
   describe('#updateQuality', () => {
-    describe('given an in-date item', () => {
+    describe('given in-date items', () => {
       test('it lowers the quality of a normal item by 1', () => {
         const items = [new Item("item", 10, 20)]
         const gildedRose = new Shop(items);
@@ -20,15 +20,20 @@ describe('Gilded Rose', () => {
         expect(item.quality).toBe(19);    
       });
 
-      test('it lowers the quality of a conjured item by 2', () => {
-        const items = [new Item("Conjured Mana Cake", 10, 20)]
+      test('it lowers the quality of conjured items by 2', () => {
+        const items = [
+          new Item("Conjured Mana Cake", 10, 20),
+          new Item("Conjured Pants", 10, 20),
+        ]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
-        const item = gildedRose.getItems()[0]
-        expect(item.quality).toBe(18);    
+        const itemOne = gildedRose.getItems()[0]
+        const itemTwo = gildedRose.getItems()[1]
+        expect(itemOne.quality).toBe(18);    
+        expect(itemTwo.quality).toBe(18);    
       });
-      
+
       test('it does not change the quality of Sulfuras', () => {
         const items = [new Item("Sulfuras, Hand of Ragnaros", 10, 80)]
         const gildedRose = new Shop(items);
@@ -95,7 +100,7 @@ describe('Gilded Rose', () => {
       });
     })
 
-    describe('given an out-of-date item', () => {
+    describe('given out-of-date items', () => {
       test('it lowers the quality of a normal item by 2, rather than 1', () => {
         const items = [new Item("item", -1, 20)]
         const gildedRose = new Shop(items);
@@ -105,13 +110,18 @@ describe('Gilded Rose', () => {
         expect(item.quality).toBe(18);      
       })
 
-      test('it lowers the quality of a conjured item by 4', () => {
-        const items = [new Item("Conjured Mana Cake", -1, 20)]
+      test('it lowers the quality of conjured items by 4', () => {
+        const items = [
+          new Item("Conjured Mana Cake", -1, 20),
+          new Item("Conjured Pants", -1, 20),
+        ]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
-        const item = gildedRose.getItems()[0]
-        expect(item.quality).toBe(16);    
+        const itemOne = gildedRose.getItems()[0]
+        const itemTwo = gildedRose.getItems()[1]
+        expect(itemOne.quality).toBe(16);    
+        expect(itemTwo.quality).toBe(16);    
       });
 
       test('it does not change the quality of Sulfuras', () => {
@@ -153,6 +163,7 @@ describe('Gilded Rose', () => {
         const items = [
           new Item("regular item", -1, 0),
           new Item("Backstage passes to a TAFKAL80ETC concert", -1, 0),
+          new Item("Conjured Pants", -1, 0),
         ]
         const gildedRose = new Shop(items);
 
