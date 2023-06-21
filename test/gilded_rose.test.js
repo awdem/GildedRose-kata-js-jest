@@ -50,24 +50,24 @@ describe('Gilded Rose', () => {
       test.each([10, 9, 8, 7, 6])(
         'when SellIn is 6..10, it raises the quality of Backstage passes by 2',
         (sellIn) => {
-          const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 0)]
+          const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 1)]
           const gildedRose = new Shop(items);
 
           gildedRose.updateQuality()
           const backstagePass = gildedRose.getItems()[0]
-          expect(backstagePass.quality).toBe(2);    
+          expect(backstagePass.quality).toBe(3);    
         }
       );
 
       test.each([5, 4, 3, 2, 1, 0])(
         'when SellIn is 0..5, it raises the quality of Backstage passes by 3',
         (sellIn) => {
-          const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 0)]
+          const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 1)]
           const gildedRose = new Shop(items);
 
           gildedRose.updateQuality()
           const backstagePass = gildedRose.getItems()[0]
-          expect(backstagePass.quality).toBe(3);    
+          expect(backstagePass.quality).toBe(4);    
         }
       );
 
