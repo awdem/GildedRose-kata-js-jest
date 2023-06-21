@@ -145,4 +145,24 @@ describe('Gilded Rose', () => {
       });
     })
   })
+
+  describe('#updateSellIn', () => {
+    it('lowers the sellIn property of all items in the items array by 1', () => {
+      const items = [
+        new Item("item one", 1, 0),
+        new Item("item two", 10, 0),
+        new Item("item three", 0, 0),
+      ]
+      const gildedRose = new Shop(items);
+
+      gildedRose.updateSellIn()
+      const itemOne = gildedRose.getItems()[0]
+      const itemTwo = gildedRose.getItems()[1]
+      const itemThree = gildedRose.getItems()[2]
+
+      expect(itemOne.sellIn).toBe(0)
+      expect(itemTwo.sellIn).toBe(9)
+      expect(itemThree.sellIn).toBe(-1)
+    })
+  })
 });
