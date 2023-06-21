@@ -36,6 +36,9 @@ class Shop {
         case "Backstage passes to a TAFKAL80ETC concert":
           this.updateBackstagePassesQuality(item);
           break;
+        case 'Conjured Mana Cake':
+          this.updateConjuredItemQuality(item);
+          break;
         default:
           item.sellIn >= 0 ? item.quality -= 1 : item.quality -= 2;
       }
@@ -61,6 +64,14 @@ class Shop {
   updateAgedBrieQuality(brie) {
     if (brie.quality < 50) {
       brie.quality += 1;
+    }
+  }
+
+  updateConjuredItemQuality(conjuredItem) {
+    if (conjuredItem.sellIn >= 0) {
+      conjuredItem.quality -= 2;
+    } else {
+      conjuredItem.quality -= 4;
     }
   }
 }
