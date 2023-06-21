@@ -47,13 +47,7 @@ class Shop {
           }
         }
       }
-      // sellIn updating 
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-
       // aged brie and expired passes catch
-
       if (this.items[i].sellIn < 0) {
         if (this.items[i].name != 'Aged Brie') {
           if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
