@@ -1,9 +1,11 @@
 const {Shop, Item} = require("../src/gilded_rose");
 
-describe("Gilded Rose", function() {
-  it("should foo", function() {
-    const gildedRose = new Shop([new Item("foo", 0, 0)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].name).toBe("fixme");
+describe("Gilded Rose", () => {
+  test("when getItems is called, it returns the items array", () => {
+    const items = [new Item("item", 0, 0)]
+    const gildedRose = new Shop(items);
+
+    shopItems =gildedRose.getItems()
+    expect(shopItems[0].name).toBe("item");
   });
 });
