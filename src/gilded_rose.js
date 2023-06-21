@@ -23,18 +23,14 @@ class Shop {
 
   updateQuality() {
     this.items.forEach((item) => {
-      if (item.quality === 0) {
-        return;
-      }
-
       const name = item.name
 
       switch (true) {
         case /aged brie/i.test(name):
-          this.updateAgedBrieQuality(item);
+          item.quality += 1;
           break;
         case /sulfuras/i.test(name):
-          break;
+          return;
         case /backstage passes/i.test(name):
           this.updateBackstagePassesQuality(item);
           break;
@@ -43,6 +39,14 @@ class Shop {
           break;
         default:
           item.sellIn >= 0 ? item.quality -= 1 : item.quality -= 2;
+      }
+
+      if (item.quality < 0) {
+        item.quality = 0;
+      }
+
+      if(item.quality > 50) {
+        item.quality = 50;
       }
     })
   }
@@ -56,16 +60,6 @@ class Shop {
       pass.quality += 3;
     } else if (pass.sellIn < 0) {
       pass.quality = 0;
-    }
-
-    if (pass.quality > 50) {
-      pass.quality = 50;
-    }
-  }
-
-  updateAgedBrieQuality(brie) {
-    if (brie.quality < 50) {
-      brie.quality += 1;
     }
   }
 
