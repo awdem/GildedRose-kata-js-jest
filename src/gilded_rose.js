@@ -1,3 +1,5 @@
+/* eslint-disable require-jsdoc */
+
 class Item {
   constructor(name, sellIn, quality){
     this.name = name;
@@ -7,7 +9,7 @@ class Item {
 }
 
 class Shop {
-  constructor(items=[]){
+  constructor(items=[]) {
     this.items = items;
   }
 
@@ -25,7 +27,7 @@ class Shop {
 
   updateQuality() {
     this.items.forEach((item) => {
-      const name = item.name
+      const name = item.name;
 
       switch (true) {
         case /aged brie/i.test(name):
@@ -43,8 +45,8 @@ class Shop {
           this.updateNormalItemQuality(item);
       }
 
-      this.limitItemQuality(item)
-    })
+      this.limitItemQuality(item);
+    });
   }
 
   updateBackstagePassesQuality(pass) {
@@ -84,5 +86,5 @@ class Shop {
 
 module.exports = {
   Item,
-  Shop
-}
+  Shop,
+};
