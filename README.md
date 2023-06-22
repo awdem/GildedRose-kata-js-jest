@@ -1,10 +1,8 @@
 # Gilded Rose
 
-This is the Gilded Rose kata in JavaScript with Jest. 
+This is my attempt at the Gilded Rose kata in JavaScript with Jest. The starting point for this kata is copied from: https://github.com/emilybache/GildedRose-Refactoring-Kata
 
-======================================
-Gilded Rose Requirements Specification
-======================================
+## Specification
 
 Hi and welcome to team Gilded Rose. As you know, we are a small inn with a prime location in a
 prominent city ran by a friendly innkeeper named Allison. We also buy and sell only the finest goods.
@@ -41,16 +39,55 @@ for you).
 Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
 legendary item and as such its Quality is 80 and it never alters.
 
+
 ## Approach
 
+This kata is meant to train your ability to understand and improve legacy code. This was my approach:
 
+- I started by extracting relevant details from the brief above, diagramming the existing classes, and playing with the codebase to understand how it worked. I made sure to note the task clearly, list any constraints, and jot down ideas for refactoring. 
+_________________
+![approach](images/approach.png)
+_________________
+- Then, I wrote behavior tests for all the existing items. I chose not to mock the Item class, because I didn't want to get killed by the goblin, and I figured no one else would either so it wasn't going to change any time soon. I did add a getItems method to make testing more readable.
+- With my tests in place, I started refactoring updateQuality:
+  - I separated the logic for updating sellIn into its own method.
+  - I wrote a switch statement to replace the nested if statements.
+  - I extracted the logic for each special item into their own methods then refactored each one.
+- When I was happy with the refactor, I continued using TDD to implement conjured items.
+- During the implementation, I made a few more refactoring changes to updateQuality:
+  - I changed the switch statement to match item names with regex expressions for flexibility
+  - I moved the min/max quality constraints to happen after the switch statement, rather than having them in multiple places.
 
-## How to run
+### Reasoning
 
-Install dependencies
+By separating out logic into different methods, I tried to adhere to the Single Responsibility Principle (SRP) and give each method a single purpose. UpdateQuality is now basically an index of quality update methods for all items. If an item's quality can change, then that logic is encapsulated in its own method. The sellIn update is now in its own method as well, and can be easily edited in the same manner as updateQuality if there are future items which break the rules for their sellIn property. Because of these changes, I think it's much easier now to add or modify an item or item type than it was before.
+
+## Code Comparison
+
+Here is a side-by-side image of the legacy code from gilded_rose.js ,with my updated code on the right.
+_________________
+![code-side-by-side](images/code_side_by_side.png)
+_________________
+
+## Observations
+
+- Writing tests first made refactoring much easier! It let me know if I had broken anything when I made changes, and it also helped me understand how the code worked. For example:
+  - The description of Sulfuras in the brief is confusing ( "Sulfuras", being a legendary item, never has to be sold or decreases in Quality'), and I wasn't sure how to handle it. But by testing, and looking at the code, I found that neither its quality nor its sellIn property decrease so I kept that in my refactor.
+  - I also found the program had a bug - Aged Brie's quality increase was being doubled when its sell by date passed, despite the rules saying that quality only 'degrades' twice as fast after the date passes, not improves. I changed this in my refactor.
+  - I also could not understand what a sellIn value of 0 meant - to me, sell in 0 days means an item is expired, but by testing the code, I found that it's treated as the last possible day to sell (e.g. backstage passes are still valuable even if there sellIn value is 0). I would have renamed it to sellBy, but again, I'm afraid of the goblin.
+
+- If I were to take this further, I would consider changing the class structure, because, right now, Shop is doing a lot of work. I might add a class called ItemUpdater that handled all the property changes. Or, if I could change the Item class, I would make it have subclasses for each 'special' case, with their own methods for updating quality and/or sellIn as necessary. Then again, I would also put it in its own file, but as I've said before, that goblin's no joke.
+
+## Example of Programm Running
+
+![example_run](images/example_run.png)
+
+## How to Install
+
+In your preferred directory:
 
 ```zsh
-git clone
+git clone https://github.com/awdem/GildedRose-kata-js-jest
 npm install
 ```
 
@@ -66,4 +103,21 @@ To generate test coverage report:
 
 ```zsh
 jest --coverage
+```
+
+## How to run
+
+You can see an example shop-front by copying these commands to your CL:
+
+```zsh
+# this defaults to showing 3 days of shop prices:
+
+node test/texttest_fixture.js
+```
+```zsh
+# to show more or less days you can add a number after the file like so:
+
+node test/texttest_fixture.js 4
+
+# You can also have a go at adding your own items to the texttest_fixture file by opening it in the editor of your choice.
 ```
