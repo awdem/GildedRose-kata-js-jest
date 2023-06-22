@@ -199,5 +199,17 @@ describe('Gilded Rose', () => {
       expect(itemTwo.sellIn).toBe(9)
       expect(itemThree.sellIn).toBe(-1)
     })
+
+    it('does not lower the sellIn property of Sulfuras', () => {
+      const items = [
+        new Item("Sulfuras", 3, 80),
+      ]
+      const gildedRose = new Shop(items);
+
+      gildedRose.updateSellIn();
+      const sulfuras = gildedRose.getItems()[0];
+
+      expect(sulfuras.sellIn).toBe(3);
+    })
   })
 });

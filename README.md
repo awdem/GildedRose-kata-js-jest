@@ -1,6 +1,6 @@
 # Gilded Rose
 
-This is the Gilded Rose kata in JavaScript with Jest
+This is the Gilded Rose kata in JavaScript with Jest. 
 
 ======================================
 Gilded Rose Requirements Specification
@@ -41,31 +41,29 @@ for you).
 Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
 legendary item and as such its Quality is 80 and it never alters.
 
+## Approach
 
-## Getting started
+
+
+## How to run
 
 Install dependencies
 
-```sh
+```zsh
+git clone
 npm install
 ```
 
-## Running tests
+## How to test
 
-To run all tests
+To run all tests:
 
-```sh
-npm test
+```zsh
+jest
 ```
 
-To run all tests in watch mode
+To generate test coverage report:
 
-```sh
-npm run test:watch
-```
-
-To generate test coverage report
-
-```sh
-npm run test:coverage
+```zsh
+jest --coverage
 ```

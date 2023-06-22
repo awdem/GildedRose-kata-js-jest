@@ -17,6 +17,8 @@ class Shop {
 
   updateSellIn() {
     this.items.forEach((item) => {
+      if (/sulfuras/i.test(item.name)) return;
+
       item.sellIn -= 1;
     });
   }
