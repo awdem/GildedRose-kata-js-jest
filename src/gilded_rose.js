@@ -23,7 +23,7 @@ class Shop {
 
   updateQuality() {
     this.items.forEach((item) => {
-      const name = item.name;
+      const name = item.name
 
       switch (true) {
         case /aged brie/i.test(name):
@@ -41,32 +41,29 @@ class Shop {
           this.updateNormalItemQuality(item);
       }
 
-      limitQuality(item);
+      this.limitItemQuality(item)
     })
   }
 
   updateBackstagePassesQuality(pass) {
-    const sellIn = pass.sellIn
-    let quality = pass.quality
+    const sellIn = pass.sellIn;
 
     if (sellIn > 10) {
-      quality += 1;
+      pass.quality += 1;
     } else if (sellIn >= 6 && sellIn <= 10) {
-      quality += 2;
+      pass.quality += 2;
     } else if (sellIn >= 0 && sellIn <= 5) {
-      quality += 3;
+      pass.quality += 3;
     } else if (sellIn < 0) {
-      quality = 0;
+      pass.quality = 0;
     }
   }
 
   updateConjuredItemQuality(conjuredItem) {
-    let quality = conjuredItem.quality
-
     if (conjuredItem.sellIn >= 0) {
-      quality -= 2;
+      conjuredItem.quality -= 2;
     } else {
-      quality -= 4;
+      conjuredItem.quality -= 4;
     }
   }
 
@@ -78,8 +75,8 @@ class Shop {
     item.sellIn >= 0 ? item.quality -= 1 : item.quality -= 2;
   }
 
-  limitQuality(item) {
-    item.quality = Math.min(Math.max(item. quality, 0), 50);
+  limitItemQuality(item) {
+    item.quality = Math.min(Math.max(item.quality, 0), 50);
   }
 }
 
