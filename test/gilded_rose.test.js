@@ -1,6 +1,12 @@
 const {Shop, Item} = require("../src/gilded_rose");
 
 describe('Gilded Rose', () => {
+  it('constructs', () => {
+    const gildedRose = new Shop();
+    expect(gildedRose).toBeTruthy();
+    expect(gildedRose).toHaveProperty('items', []);
+  });
+
   test('when getItems is called, it returns the items array', () => {
     const items = [new Item("item", 0, 0)]
     const gildedRose = new Shop(items);
@@ -51,9 +57,18 @@ describe('Gilded Rose', () => {
         const agedBrie = gildedRose.getItems()[0]
         expect(agedBrie.quality).toBe(21);    
       });
+
+      test('Aged Brie quality cannot go above 50', () => {
+        const items = [new Item("Aged Brie", 3, 50)]
+        const gildedRose = new Shop(items);
+
+        gildedRose.updateQuality()
+        const agedBrie = gildedRose.getItems()[0]
+        expect(agedBrie.quality).toBe(50);   
+      });
       
       test('when SellIn > 10, it raises the quality of Backstage passes by 1 ', () => {
-        const items = [new Item("Backstage passes to a TAFKAL80ETC concert", 11, 20)]
+        const items = [new Item("Backstage passes", 11, 20)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -64,7 +79,7 @@ describe('Gilded Rose', () => {
       test.each([10, 9, 8, 7, 6])(
         'when SellIn is 6..10, it raises the quality of Backstage passes by 2',
         (sellIn) => {
-          const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 1)]
+          const items = [new Item("Backstage passes", sellIn, 1)]
           const gildedRose = new Shop(items);
 
           gildedRose.updateQuality()
@@ -76,7 +91,7 @@ describe('Gilded Rose', () => {
       test.each([5, 4, 3, 2, 1, 0])(
         'when SellIn is 0..5, it raises the quality of Backstage passes by 3',
         (sellIn) => {
-          const items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 1)]
+          const items = [new Item("Backstage passes", sellIn, 1)]
           const gildedRose = new Shop(items);
 
           gildedRose.updateQuality()
@@ -87,9 +102,9 @@ describe('Gilded Rose', () => {
 
       test('Backstage pass quality cannot go above 50', () => {
         const items = [
-          new Item("Backstage passes to a TAFKAL80ETC concert", 15, 50),
-          new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50),
-          new Item("Backstage passes to a TAFKAL80ETC concert", 5, 50),
+          new Item("Backstage passes", 15, 50),
+          new Item("Backstage passes", 10, 50),
+          new Item("Backstage passes", 5, 50),
         ]
         const gildedRose = new Shop(items);
 
@@ -141,17 +156,8 @@ describe('Gilded Rose', () => {
         expect(agedBrie.quality).toBe(21);    
       });
 
-      test('Aged Brie quality cannot go above 50', () => {
-        const items = [new Item("Aged Brie", -1, 50)]
-        const gildedRose = new Shop(items);
-
-        gildedRose.updateQuality()
-        const agedBrie = gildedRose.getItems()[0]
-        expect(agedBrie.quality).toBe(50);   
-      });
-
       test('it sets the quality of Backstage passes to 0', () => {
-        const items = [new Item("Backstage passes to a TAFKAL80ETC concert", -1, 20)]
+        const items = [new Item("Backstage passes", -1, 20)]
         const gildedRose = new Shop(items);
 
         gildedRose.updateQuality()
@@ -162,7 +168,7 @@ describe('Gilded Rose', () => {
       test('of the items that lose quality, no item quality can go below 0', () => {
         const items = [
           new Item("regular item", -1, 0),
-          new Item("Backstage passes to a TAFKAL80ETC concert", -1, 0),
+          new Item("Backstage passes", -1, 0),
           new Item("Conjured Pants", -1, 0),
         ]
         const gildedRose = new Shop(items);
